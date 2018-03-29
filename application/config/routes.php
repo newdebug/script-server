@@ -51,4 +51,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = TRUE;
+
+/*
+| -------------------------------------------------------------------------
+| Sample REST API Routes
+| -------------------------------------------------------------------------
+*/
+$route['api/example/(:num)'] = 'api/example/users/id/$1'; // Example 4
+$route['api/example/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/example/users/id/$1/format/$3$4'; // Example 8
+
+/*
+| -------------------------------------------------------------------------
+| Scripts REST API Routes
+| -------------------------------------------------------------------------
+*/
+$route['api/scripts/(:num)'] = 'api/scripts/index/id/$1';
+$route['api/scripts/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/scripts/index/id/$1/format/$3$4';
+$route['api/scripts/([a-z_]+)/(:num)'] = 'api/scripts/index/$1/$2';
+$route['api/scripts/([a-z_]+)/(:num)/([a-z_]+)/(:num)'] = 'api/scripts/index/$1/$2/$3/$4';
