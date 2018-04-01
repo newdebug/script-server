@@ -70,3 +70,9 @@ $route['api/scripts/(:num)'] = 'api/scripts/index/id/$1';
 $route['api/scripts/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'api/scripts/index/id/$1/format/$3$4';
 $route['api/scripts/([a-z_]+)/(:num)'] = 'api/scripts/index/$1/$2';
 $route['api/scripts/([a-z_]+)/(:num)/([a-z_]+)/(:num)'] = 'api/scripts/index/$1/$2/$3/$4';
+$route['api/scripts/([a-z_]+)/(:num)/([a-z_]+)/(:num)/([a-z_]+)/(:num)'] = 'api/scripts/index/$1/$2/$3/$4/$5/$6';
+
+$route['api/platforms'] = 'api/scripts/platform';
+$route['api/platforms/(:num)'] = 'api/scripts/platform/id/$1';
+$route['api/categories'] = 'api/scripts/category';
+$route['api/categories/(:num)'] = 'api/scripts/category/id/$1';

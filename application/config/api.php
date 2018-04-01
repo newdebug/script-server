@@ -16,3 +16,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $config['tables']['category']                 = 'category';
 $config['tables']['script']                   = 'script';
+$config['tables']['platform']                 = 'platform';
+$config['tables']['relation_script']          = 'rt_platform_script';
