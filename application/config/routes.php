@@ -76,3 +76,8 @@ $route['api/platforms'] = 'api/scripts/platform';
 $route['api/platforms/(:num)'] = 'api/scripts/platform/id/$1';
 $route['api/categories'] = 'api/scripts/category';
 $route['api/categories/(:num)'] = 'api/scripts/category/id/$1';
+
+/*
+ * Upload file REST API Routes
+ */
+$route['api/uploads'] = 'api/scripts/upload';

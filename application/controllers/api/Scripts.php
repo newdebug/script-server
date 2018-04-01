@@ -139,19 +139,62 @@ class Scripts extends REST_Controller
 
     public function upload_post ()
     {
+        // test method
+        // $this->response($_FILES);
+
+        $save_dir = './uploads/images';
+        if (!file_exists($save_dir) && !is_dir($save_dir))
+        {
+            mkdir($save_dir, 0777, true);
+        }
+
+        $config = array();
+        $config['upload_path'] = FCPATH . $save_dir;
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = 1024 * 2; // 2MB
+        $config['overwrite'] = true;
+        $config['remove_spaces'] = true;//remove spaces from file
+
         $this->load->library('upload');
-        $save_dir = 'uploads/images';
+        $this->upload->initialize($config);
+        if($this->upload->do_multi_upload("files"))
+        {
+            $uploaded_files = $this->upload->get_multi_upload_data();
+            $this->response([
+                'resources' => $uploaded_files,
+                'message' => 'Upload resource(s) successful'
+            ], REST_Controller::HTTP_OK);
+        }
+        else
+        {
+            $this->response([
+                'status' => FALSE,
+                'message' => $this->upload->display_errors()
+            ], REST_Controller::HTTP_BAD_REQUEST);
+        }
+    }
+
+    private function _upload_files ()
+    {
+        $save_dir = './uploads/images';
+        if (!file_exists($save_dir) && !is_dir($save_dir))
+        {
+            mkdir($save_dir, 0777, true);
+        }
         $config = array();
         $config['upload_path'] = FCPATH . $save_dir;
         $config['allowed_types'] = 'gif|jpg|png';
         $config['max_size'] = 1024 * 2; // 2MB
         $config['overwrite'] = false;
-        $config['remove_spaces'] = true;//remove sapces from file
-        $uploaded_files = array();
+        $config['remove_spaces'] = true;//remove spaces from file
 
-        foreach ($_FILES as $key => $value)
+        $this->load->library('upload');
+
+        $uploaded_files = array();
+        $files = $_FILES;
+        foreach ($files as $key => $value)
         {
-            if (strlen($value['name']) > 0)
+            if (count($value['name']) > 0)
             {
                 $this->upload->initialize($config);
                 if (!$this->upload->do_upload($key))
@@ -162,11 +205,13 @@ class Scripts extends REST_Controller
                 }
                 else
                 {
-                    $uploaded_files[$key] = array("status" => true, "info" => $this->upload->data());
+                    $uploaded_files[$key] = array(
+                        "status" => true,
+                        "info" => $this->upload->data()
+                    );
                 }
             }
         }
-
         return $uploaded_files;
     }
 }
